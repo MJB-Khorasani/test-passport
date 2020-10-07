@@ -10,8 +10,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/users', require('./user-routes'));
 // app.use('/auth', require('./auth-routes'));
-app.use(errorController.notFound);
-app.use(errorController.internalError);
 app.use((req, res) => {
     let resObject = {
         status: '',
@@ -19,11 +17,6 @@ app.use((req, res) => {
         error: null
     };
     switch (req.status) {
-        case 500:
-            resObject.status = httpStatus[3];
-            resObject.data = [];
-            resObject.error = req.error;
-            break;
         case 200:
         case 201:
             resObject.status = httpStatus[1];
@@ -40,11 +33,6 @@ app.use((req, res) => {
             resObject.data = req.data;
             resObject.error = req.error;
             break;
-        case 404:
-            resObject.status = httpStatus[2];
-            resObject.data = req.data;
-            resObject.error = req.error;
-            break;
         default: 
             resObject.status = httpStatus[6];
             resObject.data = req.data;
@@ -54,5 +42,7 @@ app.use((req, res) => {
 
     res.json(resObject);
 });
+app.use(errorController.notFound);
+app.use(errorController.internalError);
 
 app.listen(3000, console.log);

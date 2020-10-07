@@ -1,14 +1,19 @@
+const httpStatus = require('./http-status');
+
 module.exports.notFound = (req, res, next) => {
-    req.status = 404;
-    req.data = [];
-    req.error = null;
-    next();
+    res.json({
+        status: httpStatus[2],
+        data: [],
+        error: null
+    });
 };
 
 module.exports.internalError = (error, req, res, next) => {
     console.error(error);
-    req.status = 500;
-    req.data = [];
-    req.error = error;
-    next();
+    
+    res.json({
+        status: httpStatus[3],
+        data: [],
+        error
+    });
 };

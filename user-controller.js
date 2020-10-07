@@ -1,23 +1,23 @@
 const userService = require('./user-service');
 
 module.exports.getUsers = async (req, res, next) => {
-    let [error, users] = await userService.readUsers({});
+    let users = await userService.readUsers({});
     
-    req.status = error ? 500 : 200; 
+    req.status = 200; 
     req.data = users ? users : [];
-    req.error = error;
+    req.error = null;
     next();
 };
 
 module.exports.createUser = async (req, res, next) => {
     let { email, password } = req.body;
-    let [error, user] = await userService.createUser({ 
+    let user = await userService.createUser({ 
         email, password 
     }); 
-
-    req.status = error ? 500 : 200; 
+    
+    req.status = 201;
     req.data = user ? user : [];
-    req.error = error;
+    req.error = null;
     console.log('user created');
     next();
 };
@@ -25,24 +25,24 @@ module.exports.createUser = async (req, res, next) => {
 module.exports.updateUser = async (req, res, next) => {
     let { id } = req.params;
     let { email, password } = req.body;
-    let [ error, data ] = await userService.updateUser(id, {
+    let user = await userService.updateUser(id, {
         email, password
     });
 
-    req.status = error ? 500 : 200; 
+    req.status = 200; 
     req.data = user ? user : [];
-    req.error = error;
+    req.error = null;
     console.log('user updated');
     next();
 };
 
 module.exports.deleteUser = async (req, res, next) => {
     let { id } = req.params;
-    let { error, user } = await userService.deleteUser(id);
+    let user = await userService.deleteUser(id);
 
-    req.status = error ? 500 : 200; 
+    req.status = 200; 
     req.data = user ? user : [];
-    req.error = error;
+    req.error = null;
     console.log('user deleted');
     next();
 };
