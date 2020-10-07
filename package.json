@@ -1,0 +1,29 @@
+{
+  "name": "test-passport",
+  "version": "1.0.0",
+  "description": "test passport features &amp; passport modules",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MJB-Khorasani/test-passport.git"
+  },
+  "keywords": [
+    "passport",
+    "passport-jwt",
+    "express",
+    "mongodb"
+  ],
+  "author": "MJB-Khorasani",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MJB-Khorasani/test-passport/issues"
+  },
+  "homepage": "https://github.com/MJB-Khorasani/test-passport#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.6.2"
+  }
+}
