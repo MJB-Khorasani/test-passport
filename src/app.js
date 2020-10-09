@@ -1,15 +1,19 @@
 const express = require('express');
+const passport = require('passport');
 
 const app = express();
 
+
+require('./passport');
 require('./mongodb').connect();
 const httpStatus = require('./http-status');
 const errorController = require('./error-controller');
 
 app.use(express.json());
+app.use(passport.initialize());
 app.use(express.urlencoded({ extended: true }));
 app.use('/users', require('./user-routes'));
-// app.use('/auth', require('./auth-routes'));
+app.use('/auth', require('./auth-routes'));
 app.use((req, res) => {
     let resObject = {
         status: '',
