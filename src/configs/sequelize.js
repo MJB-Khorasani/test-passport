@@ -11,7 +11,7 @@ const _sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
     host: DB_HOST,
     port: DB_PORT,
     pool: {
-        max: 0,
+        max: 2,
         min: 0,
         idle: 10000
     }
