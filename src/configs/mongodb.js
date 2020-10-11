@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/test-passport?retryWrite=true', {
+const MONGODB_CONNECTION_STRING = process.env.MONGODB_CONNECTION_STRING;
+
+mongoose.connect(MONGODB_CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }, error => {
     if (error) console.error(error);
-    else console.log('mongodb connected: %s', 'mongodb://127.0.0.1:27017/test-passport?retryWrite=true');
+    else console.log('mongodb connected: %s', MONGODB_CONNECTION_STRING);
 });
