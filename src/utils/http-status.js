@@ -1,8 +1,8 @@
 module.exports = {
-    1: 'OK',
-    2: 'Not found',
-    3: 'Server side error',
-    4: 'Authentication failed',
-    5: 'Authorization failed',
-    6: 'Not Defined'
+    1: 'Authentication failed',
+    2: 'OK',
+    3: 'Bad Request',
+    3: 'Authorization failed',
+    4: 'Not found',
+    5: 'Server side error'
 };

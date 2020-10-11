@@ -1,19 +1,28 @@
+const path = require('path');
+
+require('dotenv').config({
+    path: path.join(__dirname, '..', '.env')
+});
 const express = require('express');
 const passport = require('passport');
 
+const sequelize = require('./configs/sequelize');
+
 const app = express();
 
+require('./configs/passport');
+require('./configs/mongodb');
+const httpStatus = require('./utils/http-status');
+const errorMiddleware = require('./middlewares/error');
 
-require('./passport');
-require('./mongodb').connect();
-const httpStatus = require('./http-status');
-const errorController = require('./error-controller');
+const APP_PORT = process.env.APP_PORT;
+const APP_HOST = process.env.APP_HOST;
 
 app.use(express.json());
 app.use(passport.initialize());
 app.use(express.urlencoded({ extended: true }));
-app.use('/users', require('./user-routes'));
-app.use('/auth', require('./auth-routes'));
+app.use('/users', require('./routes/user'));
+app.use('/auth', require('./routes/auth'));
 app.use((req, res) => {
     let resObject = {
         status: '',
@@ -46,7 +55,9 @@ app.use((req, res) => {
 
     res.json(resObject);
 });
-app.use(errorController.notFound);
-app.use(errorController.internalError);
+app.use(errorMiddleware.notFound);
+app.use(errorMiddleware.internalError);
 
-app.listen(3000, console.log);
+app.listen(APP_PORT, APP_HOST, error => {
+    console.log(`server is up on : http://${APP_HOST}:${APP_PORT}`);
+});
