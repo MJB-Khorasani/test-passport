@@ -7,7 +7,7 @@ Role.init({
     id: {
         primaryKey: true,
         type: DataTypes.UUID,
-        defaultValue: DataType.UUIDV4
+        defaultValue: DataTypes.UUIDV4
     },
     department: DataTypes.STRING,
     accessLevel: DataTypes.SMALLINT

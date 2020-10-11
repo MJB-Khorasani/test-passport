@@ -8,7 +8,7 @@ User.init({
     id: {
         primaryKey: true,
         type: DataTypes.UUID,
-        defaultValue: DataType.UUIDV4
+        defaultValue: DataTypes.UUIDV4
     },
     email: DataTypes.STRING,
     password: DataTypes.STRING
@@ -17,6 +17,6 @@ User.init({
 });
 
 Role.hasMany(User);
-User.blongsTo(Role);
+User.belongsTo(Role);
 
 module.exports = User;

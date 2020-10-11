@@ -1,4 +1,4 @@
-const httpStatus = require('./http-status');
+const httpStatus = require('../utils/http-status');
 
 module.exports.notFound = (req, res, next) => {
     res.json({

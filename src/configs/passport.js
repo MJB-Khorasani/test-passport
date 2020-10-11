@@ -1,28 +1,27 @@
 const { promises: fsPromises } = require('fs');
 const path = require('path');
 
-const { ObjectID } = require('mongodb');
+const { ObjectId } = require('mongoose');
 const passport = require('passport');
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 
-const mongodb = require('./mongodb');
+const User = require('../models/user');
 
-var publicKey = fsPromises.readFile(path.join(__dirname, 'keys', 'id_rsa_public.pem'));
-var privateKey = fs.readFile(path.join(__dirname, 'keys', 'id_rsa_private.pem'));
+const PUBLIC_KEY_PATH = path.join(__dirname, '..', '..', 'keys', 'id_rsa_public.pem');
+const PUBLIC_KEY = fsPromises.readFile(PUBLIC_KEY_PATH);
 
 var jwtStrategy = new JwtStrategy({
     algorithms: ['RS256'],
-    secretOrKey: publicKey,
+    secretOrKey: PUBLIC_KEY,
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
-}, async (payload, callback) = > {
+}, async (payload, callback) => {
     try {
-        let db = mongodb.getDb();
-        let user = await db.collection('users').findOne({
-            _id: ObjectID(payload.sub)
+        let user = await User.findOne({
+            _id: ObjectId(payload.sub)
         });
 
         if (!user) callback(null, false);
-        else callback(null user);
+        else callback(null, user);
     } catch (error) {
         callback(error, null);
     };
@@ -33,9 +32,8 @@ passport.serializeUser((user, callback) => {
     callback(null, user._id);
 });
 passport.deserializeUser(async (id, callback) => {
-    let db = mongodb.getDb();
-    let user = await db.collection('users').findOne({
-        _id: ObjectID(id)
+    let user = await User.findOne({
+        _id: ObjectId(id)
     });
 
     callback(null, user);

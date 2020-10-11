@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-const ObjectID = mongoose.ObjectId;
+const { Schema, ObjectId } = mongoose;
 
 const tokenSchema = new Schema({
     _id: ObjectId,

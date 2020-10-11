@@ -3,6 +3,7 @@ const path = require('path');
 require('dotenv').config({
     path: path.join(__dirname, '..', '.env')
 });
+
 const express = require('express');
 const passport = require('passport');
 
@@ -59,5 +60,6 @@ app.use(errorMiddleware.notFound);
 app.use(errorMiddleware.internalError);
 
 app.listen(APP_PORT, APP_HOST, error => {
+    sequelize.getSequelize().sync().then(() => console.log('Postgres connected & synchronized.'));
     console.log(`server is up on : http://${APP_HOST}:${APP_PORT}`);
 });

@@ -4,19 +4,19 @@ const User = require('../models/user');
 module.exports.readUsers = async opt => {
     let users = await User.find(opt);
     
-    return users ? users : null;
+    return users ? users : [];
 };
 
 module.exports.readUser = async opt => {
     let user = await User.findOne(opt);
 
-    return user
+    return user ? user : {};
 };
 
 module.exports.createUser = async user => {
-    await User.create(user);
+    let data = await User.create(user);
 
-    return data ? data.ops[0] : [];
+    return data ? data : [];
 };
 
 module.exports.updateUser = async (id, user) => {
@@ -28,8 +28,9 @@ module.exports.updateUser = async (id, user) => {
 };
 
 module.exports.deleteUser = async id => {
-    let db = mongodb.getDb();
-    let data = await db.collection('users').deleteOne({ _id: ObjectID(id) });
+    let data = await User.deleteOne({ 
+        _id: ObjectId(id) 
+    });
  
     return data ? data : null;
 };
