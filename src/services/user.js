@@ -1,8 +1,7 @@
-const { ObjectId } = require('mongoose');
 const User = require('../models/user');
 
 module.exports.readUsers = async opt => {
-    let users = await User.find(opt);
+    let users = await User.findAll(opt);
     
     return users ? users : [];
 };
@@ -19,18 +18,17 @@ module.exports.createUser = async user => {
     return data ? data : [];
 };
 
-module.exports.updateUser = async (id, user) => {
-    let data = await User.update({ 
-        _id: ObjectId(id) 
-    }, user);
+module.exports.updateUser = async (user, opt) => {
+    let data = await User.update(user, opt);
     
     return data ? data : null;
 };
 
 module.exports.deleteUser = async id => {
-    let data = await User.deleteOne({ 
-        _id: ObjectId(id) 
+    let user = await User.findOne({
+        where: { id }
     });
- 
-    return data ? data : null;
+    
+    await user.destroy();
+    return user ? user : null;
 };

@@ -1,11 +1,15 @@
-const mongoose = require('mongoose');
+const mongodb = require('mongodb');
 
 const MONGODB_CONNECTION_STRING = process.env.MONGODB_CONNECTION_STRING;
 
-mongoose.connect(MONGODB_CONNECTION_STRING, {
+var _db;
+
+mongodb.connect(MONGODB_CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}, error => {
-    if (error) console.error(error);
-    else console.log('mongodb connected: %s', MONGODB_CONNECTION_STRING);
+}).then(client => {
+    _db = client.db();
+    console.log('mongodb connected: %s', MONGODB_CONNECTION_STRING)
 });
+
+module.exports.getDb = () => _db ? _db : null;

@@ -2,7 +2,7 @@ const httpStatus = require('../utils/http-status');
 
 module.exports.notFound = (req, res, next) => {
     res.json({
-        status: httpStatus[2],
+        status: httpStatus.notFound,
         data: [],
         error: null
     });
@@ -12,8 +12,10 @@ module.exports.internalError = (error, req, res, next) => {
     console.error(error);
     
     res.json({
-        status: httpStatus[3],
+        status: httpStatus.serverSideError,
         data: [],
-        error
+        error: {
+            message: error.message
+        }
     });
 };

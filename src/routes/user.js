@@ -10,6 +10,7 @@ router
 
 router
     .route('/:id')
+    .get(asyncMiddlewareHandler(userController.getUser))
     .put(asyncMiddlewareHandler(userController.updateUser))
     .delete(asyncMiddlewareHandler(userController.deleteUser));
 

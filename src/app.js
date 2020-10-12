@@ -33,22 +33,27 @@ app.use((req, res) => {
     switch (req.status) {
         case 200:
         case 201:
-            resObject.status = httpStatus[1];
+            resObject.status = httpStatus.OK;
+            resObject.data = req.data;
+            resObject.error = req.error;
+            break;
+        case 400:
+            resObject.status = httpStatus.badReqeust;
             resObject.data = req.data;
             resObject.error = req.error;
             break;
         case 401:
-            resObject.status = httpStatus[4];
+            resObject.status = httpStatus.authorizationFailed;
             resObject.data = req.data;
             resObject.error = req.error;
             break;
         case 403:
-            resObject.status = httpStatus[5];
+            resObject.status = httpStatus.forbidden;
             resObject.data = req.data;
             resObject.error = req.error;
             break;
         default: 
-            resObject.status = httpStatus[6];
+            resObject.status = httpStatus.serverSideError;
             resObject.data = req.data;
             resObject.error = req.error;
             break;
